@@ -1,0 +1,82 @@
+package Chapter_5;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Craps {
+    public static void main(String[] args) {
+        Random r = new Random();
+        Scanner sc = new Scanner(System.in);
+        int amount = 0;
+        // Betting Section
+        while(true)
+        {
+            System.out.print("Enter the amount you want to bet : ");
+        int bet = sc.nextInt();
+        amount += bet;
+
+        //Rolling
+            if(amount>0) {
+                String S;
+                System.out.println("Press enter to roll the first dice : ");
+                S = sc.nextLine();
+                int a = 1 + r.nextInt(6);
+                System.out.println("You rolled " + a);
+
+                System.out.print("Press enter to roll the second dice : ");
+                S = sc.nextLine();
+                int b = 1 + r.nextInt(6); 
+                System.out.println("You rolled " + b);
+
+                //Calculation
+                int sum = a + b;
+                //Winning
+                if (sum == 7 || sum == 11) {
+                    System.out.println("You Won! Adding " + bet + " to your account");
+                    amount += bet;
+                }
+                //Losing
+                    else if (sum == 2 || sum == 3 || sum == 12) {
+                    System.out.println("You Lost! Deducting " + bet + " from your account.");
+                    amount -= bet;
+                }
+                    //Point
+                    else {
+                    System.out.println("You've hit point " + sum);
+                    System.out.println("Press 1 to get insurance (Returns your bet and leave) : ");
+                    int c = sc.nextInt();
+                    if(c==1) System.out.println("Returning your bet ");
+                    else {
+                        while (true) {
+                            System.out.print("Press enter to roll the first dice :");
+                            S = sc.nextLine();
+                            a = 1 + r.nextInt(6);
+                            System.out.println("You've rolled " + a);
+                            System.out.print("Press enter to roll the second dice :");
+                            S = sc.nextLine();
+                            b = 1+ r.nextInt(6);
+                            System.out.println("You've rolled " + b);
+                            int nsum = a + b;
+                            if (nsum == sum) {
+                                System.out.println("You've hit " + sum + " & won!");
+                                amount += bet;
+                                break;
+                            } else if (nsum == 7) {
+                                System.out.println("You've hit 7 & lost!");
+                                amount -= bet;
+                                break;
+                            } else System.out.println("You didn't hit " + sum + " or 7. Rolling again...");
+                        }
+                    }
+
+                }
+                System.out.println("Your have "+amount+" in your account.");
+            }
+            else System.out.println("You do not have enough money to play!");
+            System.out.print("Press 1 to play again :");
+            int play = sc.nextInt();
+            if(play!=1) break;
+
+        }
+        System.out.println("Cashing "+amount+" out of your account.");
+    }
+}
